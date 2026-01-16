@@ -1,9 +1,15 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { StudentData, RiskAnalysis } from "../types";
 
 export const generateRescuePlan = async (data: StudentData): Promise<RiskAnalysis> => {
-  const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
+  // Use import.meta.env for Vite instead of process.env
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  
+  if (!apiKey) {
+    throw new Error("VITE_GEMINI_API_KEY is not defined. Please check your Netlify environment variables.");
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
   
   const subjectsStr = data.subjects.map(s => `${s.name}: ${s.marks}% (Backlog: ${s.hasBacklog})`).join(', ');
 
@@ -18,7 +24,7 @@ export const generateRescuePlan = async (data: StudentData): Promise<RiskAnalysi
   `;
 
   const response = await ai.models.generateContent({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-1.5-flash', // Updated to a stable 2026 production model
     contents: prompt,
     config: {
       systemInstruction: "You are a world-class academic performance coach. Analyze drop-risk (High/Medium/Low) and provide a concise, on-point rescue plan. 'summary' should be a single, high-impact paragraph of about 60-80 words. Subject strategies must be extremely specific. Include 'motivational_quotes' as an array of 3 objects, each with 'text' (concise and powerful) and 'icon' (choose from 'heart', 'lamp', 'sparkles').",
@@ -63,5 +69,5 @@ export const generateRescuePlan = async (data: StudentData): Promise<RiskAnalysi
   });
 
   if (!response.text) throw new Error("No response from AI");
-  return JSON.parse(response.text) as RiskAnalysis;
+  return JSON.parse(response.text()) as RiskAnalysis;
 };

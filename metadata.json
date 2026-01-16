@@ -1,0 +1,5 @@
+{
+  "name": "AcademicRescue",
+  "description": "An AI-powered academic rescue system for engineering students, identifying drop-risks and providing personalized rescue plans using Gemini AI.",
+  "requestFramePermissions": []
+}

@@ -3,7 +3,7 @@ import { StudentData, RiskAnalysis } from "../types";
 
 export const generateRescuePlan = async (data: StudentData): Promise<RiskAnalysis> => {
   // Use import.meta.env for Vite instead of process.env
-  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
   
   if (!apiKey) {
     throw new Error("VITE_GEMINI_API_KEY is not defined. Please check your Netlify environment variables.");

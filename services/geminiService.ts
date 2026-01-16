@@ -24,7 +24,7 @@ export const generateRescuePlan = async (data: StudentData): Promise<RiskAnalysi
   `;
 
   const response = await ai.models.generateContent({
-    model: 'gemini-1.5-flash', // Updated to a stable 2026 production model
+    model: 'gemini-1.5-flash',
     contents: prompt,
     config: {
       systemInstruction: "You are a world-class academic performance coach. Analyze drop-risk (High/Medium/Low) and provide a concise, on-point rescue plan. 'summary' should be a single, high-impact paragraph of about 60-80 words. Subject strategies must be extremely specific. Include 'motivational_quotes' as an array of 3 objects, each with 'text' (concise and powerful) and 'icon' (choose from 'heart', 'lamp', 'sparkles').",

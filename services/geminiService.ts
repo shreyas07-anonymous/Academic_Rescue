@@ -2,7 +2,7 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { StudentData, RiskAnalysis } from "../types";
 
 export const generateRescuePlan = async (data: StudentData): Promise<RiskAnalysis> => {
-  // Use import.meta.env for Vite instead of process.env
+  
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   
   if (!apiKey) {
